@@ -36,13 +36,13 @@ public class Post {
 	String content;
 	
 	@OneToMany(mappedBy = "post")
-	List<Section> posts;
+	List<Section> parts;
 	
 	String shortContent;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "author_id")
-	Author poblishedBy;
+	Author publishedBy;
 	
 	@JsonProperty(access = Access.READ_ONLY)
 	@Column(nullable = false)

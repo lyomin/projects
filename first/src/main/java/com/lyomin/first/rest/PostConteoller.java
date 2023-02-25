@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lyomin.first.domain.Post;
 import com.lyomin.first.post.PostService;
+import com.lyomin.first.post.model.PostListItem;
 
 @RestController
 @RequestMapping("posts")
@@ -31,7 +32,7 @@ public class PostConteoller {
 	}
 	
 	@GetMapping(path = "/all")
-	public Page<Post> getAll(Pageable pageable) {
+	public Page<PostListItem> getAll(Pageable pageable) {
 		
 		if (pageable.getSort().isUnsorted())
 			pageable = PageRequest.of(
@@ -39,7 +40,7 @@ public class PostConteoller {
 					Sort.by(Direction.DESC, "createdAt")
 			);
 		
-		return postServie.list(pageable);
+		return postServie.listPage(pageable);
 	}
 
 	@PostMapping(path = "/")

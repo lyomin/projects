@@ -2,6 +2,7 @@ package com.lyomin.first.domain;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -26,11 +27,13 @@ public class Section {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
+	@Column(name = "order_number")
 	Integer order;
 	String title;
 	@Column(columnDefinition = "TEXT")
 	String content;
 	@ManyToOne
 	@JoinColumn(name = "post_id")
+	@JsonIgnore
 	Post post;
 }
