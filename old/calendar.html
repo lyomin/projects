@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html  lang="lt-LT">
+
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      border: 1px solid black;
+      padding: 3px;
+      text-align: center;
+    }
+
+    th {
+      font-weight: bold;
+      background-color: #E6E6E6;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div id="calendar"></div>
+
+  <script>
+    function createCalendar(elem, year, month, firstDayOfWeek) {
+
+        // configs
+
+        const language = 'lt-lt';
+        const options = {  weekday: 'short' };
+        const optionsNumeric = {  weekday: 'short' };
+        const optionsMounth = {  year: 'numeric', month: 'narrow' };
+
+      getDayOfTheWeek = [0,1,2,3,4,5,6].map(d => d - firstDayOfWeek).map(d => d < 0 ? d + 7 : d);
+
+
+      let table = document.createElement("table");
+      let caption = document.createElement("caption");
+
+      caption.innerText = new Date(year, month, 1).toLocaleString(language, optionsMounth);
+
+      table.append(caption);
+      // header
+      let row =  document.createElement("tr");
+
+      for (let w = 0; w < 7; w ++) {
+        let th = document.createElement("th");
+        row.append(th);
+      }
+      for (let f = 0; f < 7; f ++) {
+        let dt = new Date(year, month, 1 + f);
+        row.children[getDayOfTheWeek[dt.getDay()]].innerText = dt.toLocaleString(language, options);
+      }
+      table.append(row);
+
+      // calendar
+
+      row =  document.createElement("tr");
+
+      let date = new Date(year, month, 1);
+
+
+      for (let w = 0; w < getDayOfTheWeek[date.getDay()]; w ++)
+        row.append(document.createElement("td"));
+    
+      for (let d = 1; d < 32; d ++) {
+        date = new Date(year, month, d);
+
+        
+        let td = document.createElement("td");
+        if (date.getDate() != d) { row.append(td);break;}
+        
+        
+        td.innerText = date.getDate();
+        row.append(td);
+        if(getDayOfTheWeek[date.getDay()] == 6) {table.append(row); row = document.createElement("tr")}
+
+        
+      }
+        
+
+      for (let w = getDayOfTheWeek[date.getDay()]; w < 6; w ++)
+        row.append(document.createElement("td"));
+
+        table.append(row);
+        elem.append(table);
+    }
+    for (let m = 0; m < 12; m++)
+        createCalendar(calendar, 2022, m, 1);
+  </script>
+
+</body>
+</html>
